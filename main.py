@@ -6,8 +6,9 @@
 Python 3 environment 
 """
 
-#import pip
-#pip.main(['install', '--disable-pip-version-check', '--no-cache-dir', 'logging_gelf'])
+import pip
+pip.main(['install', '--disable-pip-version-check', '--no-cache-dir', 'logging_gelf'])
+pip.main(['install', '--disable-pip-version-check', '--no-cache-dir', 'marketorestpython'])
 
 import sys
 import os
