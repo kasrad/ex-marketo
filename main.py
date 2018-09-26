@@ -40,6 +40,7 @@ munchkin_id = cfg.get_parameters()["#munchkin_id"] # fill in Munchkin ID, typica
 client_secret = cfg.get_parameters()["#client_secret"] # enter Client ID and Secret from Admin > LaunchPoint > View Details
 method = cfg.get_parameters()["method"]
 desired_fields = cfg.get_parameters()["desired_fields"]
+desired_fields = desired_fields.split()
 logging.info("config successfuly read")
 
 ### Get proper list of tables
