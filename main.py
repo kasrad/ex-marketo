@@ -49,11 +49,12 @@ logger.removeHandler(logger.handlers[0])
 ### Access the supplied rules
 cfg = docker.Config('/data/')
 params = cfg.get_parameters()
-munchkin_id = cfg.get_parameters()["munchkin_id"] # fill in Munchkin ID, typical format 000-AAA-000
-client_id = cfg.get_parameters()["client_id"] # enter Client ID from Admin > LaunchPoint > View Details
-client_secret = cfg.get_parameters()["client_secret"] # enter Client ID and Secret from Admin > LaunchPoint > View Details
-method = cfg.get_parameters()["method"]
-desired_fields = cfg.get_parameters()["desired_fields"]
+logging.info("params read")
+munchkin_id = cfg.get_parameters()['munchkin_id'] # fill in Munchkin ID, typical format 000-AAA-000
+client_id = cfg.get_parameters()['client_id'] # enter Client ID from Admin > LaunchPoint > View Details
+client_secret = cfg.get_parameters()['client_secret'] # enter Client ID and Secret from Admin > LaunchPoint > View Details
+method = cfg.get_parameters()['method']
+desired_fields = cfg.get_parameters()['desired_fields']
 logging.info("config successfuly read")
 
 ### Get proper list of tables
