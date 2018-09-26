@@ -37,24 +37,11 @@ logging.basicConfig(
 logger = logging.getLogger()
 logging_gelf_handler = logging_gelf.handlers.GELFTCPSocketHandler(
     host=os.getenv('KBC_LOGGER_ADDR'),
-    port=int(os.getenv('KBC_LOGGER_PORT'))
-    )
-logging_gelf_handler.setFormatter(logging_gelf.formatters.GELFFormatter(null_character=True))
-logger.addHandler(logging_gelf_handler)
-
-# removes the initial stdout logging
-logger.removeHandler(logger.handlers[0])
-"""
-
-### Access the supplied rules
-cfg = docker.Config('/data/')
-params = cfg.get_parameters()
-logging.info("params read")
-munchkin_id = cfg.get_parameters()['munchkin_id'] # fill in Munchkin ID, typical format 000-AAA-000
-client_id = cfg.get_parameters()['client_id'] # enter Client ID from Admin > LaunchPoint > View Details
-client_secret = cfg.get_parameters()['client_secret'] # enter Client ID and Secret from Admin > LaunchPoint > View Details
-method = cfg.get_parameters()['method']
-desired_fields = cfg.get_parameters()['desired_fields']
+munchkin_id = cfg.get_parameters()["munchkin_id"] # fill in Munchkin ID, typical format 000-AAA-000
+client_id = cfg.get_parameters()["client_id"] # enter Client ID from Admin > LaunchPoint > View Details
+client_secret = cfg.get_parameters()["client_secret"] # enter Client ID and Secret from Admin > LaunchPoint > View Details
+method = cfg.get_parameters()["method"]
+desired_fields = cfg.get_parameters()["desired_fields"]
 logging.info("config successfuly read")
 
 ### Get proper list of tables
