@@ -47,8 +47,8 @@ in_tables = cfg.get_input_tables()
 out_tables = cfg.get_expected_output_tables()
 out_files = cfg.get_expected_output_files()
 logging.info("IN tables mapped: "+str(in_tables))
-logging.info("IN files mapped: "+str(in_files))
-# logging.info("OUT tables mapped: "+str(out_tables))
+# logging.info("IN files mapped: "+str(in_files))
+logging.info("OUT tables mapped: "+str(out_tables))
 logging.info("OUT files mapped: "+str(out_files))
 
 
