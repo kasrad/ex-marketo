@@ -207,7 +207,7 @@ def main():
                             fields = desired_fields)
     else if method == 'extract_leads_by_filter':
         extract_leads_by_filter(output_file = DEFAULT_FILE_DESTINATION + 'leads_by_filter.csv',
-                            source_file = DEFAULT_TABLE_INPUT + 'lead_filter_input',
+                            source_file = DEFAULT_TABLE_INPUT + 'lead_filter_input.csv',
                             filter_on = 'email',
                             filter_values_column = 'e-mail',
                             fields = desired_fields)
