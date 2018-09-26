@@ -15,8 +15,8 @@ import logging
 import csv
 import json
 import pandas as pd
-import logging_gelf.formatters
-import logging_gelf.handlers
+# import logging_gelf.formatters
+# import logging_gelf.handlers
 from keboola import docker
 from marketorestpython.client import MarketoClient
 
