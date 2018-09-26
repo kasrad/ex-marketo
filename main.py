@@ -16,8 +16,6 @@ import logging
 import csv
 import json
 import pandas as pd
-# import logging_gelf.formatters
-# import logging_gelf.handlers
 from keboola import docker
 from marketorestpython.client import MarketoClient
 
@@ -33,19 +31,18 @@ logging.basicConfig(
     format='%(asctime)s - %(levelname)s - %(message)s',
     datefmt="%Y-%m-%d %H:%M:%S")
 
-"""
-logger = logging.getLogger()
-logging_gelf_handler = logging_gelf.handlers.GELFTCPSocketHandler(
-    host=os.getenv('KBC_LOGGER_ADDR'),
-munchkin_id = cfg.get_parameters()["munchkin_id"] # fill in Munchkin ID, typical format 000-AAA-000
+### Access the supplied rules
+cfg = docker.Config('/data/')
+params = cfg.get_parameters()
+logging.info("params read")
 client_id = cfg.get_parameters()["client_id"] # enter Client ID from Admin > LaunchPoint > View Details
+munchkin_id = cfg.get_parameters()["munchkin_id"] # fill in Munchkin ID, typical format 000-AAA-000
 client_secret = cfg.get_parameters()["client_secret"] # enter Client ID and Secret from Admin > LaunchPoint > View Details
 method = cfg.get_parameters()["method"]
 desired_fields = cfg.get_parameters()["desired_fields"]
 logging.info("config successfuly read")
 
 ### Get proper list of tables
-cfg = docker.Config('/data/')
 in_tables = cfg.get_input_tables()
 out_tables = cfg.get_expected_output_tables()
 out_files = cfg.get_expected_output_files()
