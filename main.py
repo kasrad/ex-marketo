@@ -57,7 +57,7 @@ DEFAULT_TABLE_INPUT = "/data/in/tables/"
 DEFAULT_FILE_INPUT = "/data/in/files/"
 
 DEFAULT_FILE_DESTINATION = "/data/out/files/"
-DEFAULT_TABLE_OUTPUT = "/data/out/tables/"
+DEFAULT_TABLE_DESTINATION = "/data/out/tables/"
 
 
 def get_tables(in_tables):
