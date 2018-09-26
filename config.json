@@ -1,0 +1,28 @@
+{"type":"object",
+"title":"Marketo Database",
+"required":["#munchkin_id","#client_id","#client_secret","method","desired_fields"],
+"properties":
+    {"method":
+        {"enum":["extract_leads_by_ids","extract_leads_by_filter"],
+        "type":"string",
+        "title":"method",
+        "default":"extract_leads_by_ids",
+        "propertyOrder":5},
+    "#munchkin_id":
+        {"type":"string",
+        "title":"Munchkin ID token",
+        "propertyOrder":1},
+        "#client_id":
+        {"type":"string",
+        "title":"Client ID token",
+        "propertyOrder":2}, 
+    "#client_secret":
+        {"type":"string",
+        "title":"Client Secret token",
+        "propertyOrder":3},
+    "fields":
+        {"type":"string",
+        "title":"fields",
+        "propertyOrder":4}
+    }
+}

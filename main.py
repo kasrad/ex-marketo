@@ -208,8 +208,8 @@ def main():
     else if method == 'extract_leads_by_filter':
         extract_leads_by_filter(output_file = DEFAULT_FILE_DESTINATION + 'leads_by_filter.csv',
                             source_file = DEFAULT_TABLE_INPUT + 'lead_filter_input',
-                            filter_on,
-                            filter_values_column,
+                            filter_on = 'email',
+                            filter_values_column = 'e-mail',
                             fields = desired_fields)
 
     
