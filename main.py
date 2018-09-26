@@ -205,7 +205,7 @@ def main():
         extract_leads_by_ids(output_file = DEFAULT_TABLE_DESTINATION + 'leads_by_ids.csv',
                             source_file = DEFAULT_TABLE_INPUT + 'lead_ids_list_input.csv',
                             fields = desired_fields)
-    else if method == 'extract_leads_by_filter':
+    elif method == 'extract_leads_by_filter':
         extract_leads_by_filter(output_file = DEFAULT_FILE_DESTINATION + 'leads_by_filter.csv',
                             source_file = DEFAULT_TABLE_INPUT + 'lead_filter_input.csv',
                             filter_on = 'email',
