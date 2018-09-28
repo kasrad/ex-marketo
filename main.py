@@ -7,9 +7,6 @@ Python 3 environment
 """
 
 import pip
-pip.main(['install', '--disable-pip-version-check', '--no-cache-dir', 'logging_gelf'])
-pip.main(['install', '--disable-pip-version-check', '--no-cache-dir', 'marketorestpython'])
-
 import sys
 import os
 import logging
@@ -315,21 +312,31 @@ def get_lead_changes(output_file,
     
     unique_keys = []
     for i in results:
+        
         try:
             for j in i['attributes']:
                 i[j['name']] = j['value']
 
             i.pop('attributes', None)
-            
-            for k in i['fields']:
-                i[k['name']] = k['value']
-                
-            i.pop('fields', None)
 
-            unique_keys.extend(list(i.keys()))
         except KeyError:
             pass
-            
+    
+    
+
+        try:
+            for l in range(len(i['fields'])):
+                i['name'] = i['fields'][l]['name']
+                i[("newValue_{}").format(i['name'])] = i['fields'][l]['newValue']
+                i['oldValue' + '_' + i['name']] = i['fields'][l]['oldValue']
+
+            i.pop('fields', None)
+
+        except KeyError:
+            pass
+
+        except TypeError:
+            pass            
 
     unique_keys = list(set(unique_keys))
 
@@ -340,6 +347,26 @@ def get_lead_changes(output_file,
             dict_writer.writeheader()
             dict_writer.writerows(results)
         
+def get_deleted_leads(output_file,
+                     since_date):
+    
+    """
+    output file: will contain first and last name, Marketo ID and time of deletion, but no additional Lead attributes    
+    since_date
+    """
+    
+    results = mc.execute(method='get_deleted_leads', nextPageToken=None, sinceDatetime=date.today(), batchSize=None)  
+   
+    if len(results) == 0:
+        print('No results!')
+        return
+    
+    with open(output_file, mode='w', encoding='utf-8') as out_file:
+
+            keys = results[0].keys()
+            dict_writer = csv.DictWriter(out_file, keys)
+            dict_writer.writeheader()
+            dict_writer.writerows(results)
         
     
 def main():
@@ -353,6 +380,7 @@ def main():
         extract_leads_by_ids(output_file = DEFAULT_TABLE_DESTINATION + 'leads_by_ids.csv',
                             source_file = DEFAULT_TABLE_INPUT + 'lead_ids_list_input.csv',
                             fields = desired_fields)
+
     elif method == 'extract_leads_by_filter':
         extract_leads_by_filter(output_file = DEFAULT_FILE_DESTINATION + 'leads_by_filter.csv',
                             source_file = DEFAULT_TABLE_INPUT + 'lead_filter_input.csv',
