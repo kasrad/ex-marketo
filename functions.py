@@ -304,7 +304,10 @@ def get_deleted_leads(output_file,
     since_date
     """
     
-    results = mc_object.execute(method='get_deleted_leads', nextPageToken=None, sinceDatetime=date.today(), batchSize=None)  
+    results = mc_object.execute(method='get_deleted_leads',
+                                 nextPageToken=None,
+                                 sinceDatetime=since_date,
+                                  batchSize=None)  
    
     if len(results) == 0:
         print('No results!')
