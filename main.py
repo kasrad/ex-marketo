@@ -37,6 +37,8 @@ munchkin_id = cfg.get_parameters()["#munchkin_id"] # fill in Munchkin ID, typica
 client_secret = cfg.get_parameters()["#client_secret"] # enter Client ID and Secret from Admin > LaunchPoint > View Details
 method = cfg.get_parameters()["method"]
 desired_fields = cfg.get_parameters()["desired_fields"]
+since_date = cfg.get_parameters()["since_date"] #YYYY-MM-DD
+until_date = cfg.get_parameters()["until_date"] #YYYY-MM-DD
 desired_fields = desired_fields.split()
 logging.info("config successfuly read")
 
@@ -382,11 +384,35 @@ def main():
                             fields = desired_fields)
 
     elif method == 'extract_leads_by_filter':
-        extract_leads_by_filter(output_file = DEFAULT_FILE_DESTINATION + 'leads_by_filter.csv',
+        extract_leads_by_filter(output_file = DEFAULT_TABLE_DESTINATION + 'leads_by_filter.csv',
                             source_file = DEFAULT_TABLE_INPUT + 'lead_filter_input.csv',
                             filter_on = 'email',
                             filter_values_column = 'e-mail',
                             fields = desired_fields)
+
+    elif method == 'get_deleted_leads':
+        get_deleted_leads(output_file = DEFAULT_TABLE_DESTINATION + 'deleted_leads.csv',
+                        since_date = since_date):
+
+    elif method == 'get_lead_changes':
+        get_lead_changes(output_file = DEFAULT_TABLE_DESTINATION + 'lead_changes.csv',
+                     fields = desired_fields,
+                     since_date = since_date,
+                     until_date = until_date)
+
+    elif method == 'get_lead_activities':
+        get_lead_activities(output_file = DEFAULT_TABLE_DESTINATION + 'lead_activites.csv',
+                        source_file = DEFAULT_TABLE_INPUT + 'lead_ids_act_ids.csv',
+                        since_date = since_date,
+                        until_date = until_date)
+
+    elif method == 'get_companies':
+        get_companies(output_file = DEFAULT_TABLE_DESTINATION + 'companies.csv',
+                  source_file = DEFAULT_TABLE_INPUT + 'lead_ids_act_ids.csv',
+                  filter_on = 'email',
+                  filter_values_column = 'e-mail',
+                  fields = desired_fields)
+        
 
     
     
