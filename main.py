@@ -62,6 +62,7 @@ def main():
     Main execution script.
     """
     logging.info('starting the main')
+    mc = MarketoClient(munchkin_id, client_id, client_secret)
     logging.info('mc read')
     if method == 'extract_leads_by_ids':
         fces.extract_leads_by_ids(output_file = DEFAULT_TABLE_DESTINATION + 'leads_by_ids.csv',
