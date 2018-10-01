@@ -11,6 +11,7 @@ import os
 import logging
 from keboola import docker
 import functions as fces
+from marketorestpython.client import MarketoClient
 
 ### Environment setup
 abspath = os.path.abspath(__file__)
@@ -78,7 +79,7 @@ def main():
 
     elif method == 'get_deleted_leads':
         fces.get_deleted_leads(output_file = DEFAULT_TABLE_DESTINATION + 'deleted_leads.csv',
-        since_date = since_date)
+                            since_date = since_date)
 
     elif method == 'get_lead_changes':
         fces.get_lead_changes(output_file = DEFAULT_TABLE_DESTINATION + 'lead_changes.csv',
