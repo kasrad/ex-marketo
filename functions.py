@@ -46,7 +46,7 @@ def output_file(output_model, file_out="data.json"):
     jsonfile.close()
     
   
-def extract_leads_by_ids(output_file, source_file,
+def extract_leads_by_ids(output_file, source_file, mc_object,
                          fields = ['id', 'firstName', 'lastName', 'email',
                                    'updatedAt', 'createdAt', 'Do Not Call Reason']):
     """
@@ -60,10 +60,9 @@ def extract_leads_by_ids(output_file, source_file,
         leads = []
         lazy_lines = (line for line in in_file)
         reader = csv.DictReader(lazy_lines, lineterminator = '\n')
-        
-        mc = MarketoClient(munchkin_id, client_id, client_secret)
+     
         for lead_record in reader:
-            lead_detail = mc.execute(method='get_lead_by_id',
+            lead_detail = mc_object.execute(method='get_lead_by_id',
                                      id=lead_record["lead_id"])
             if len(lead_detail) > 0 :
                 leads.append(lead_detail[0])
@@ -77,6 +76,7 @@ def extract_leads_by_ids(output_file, source_file,
 
 def extract_leads_by_filter(output_file,
                             source_file,
+                            mc_object,
                             filter_on,
                             filter_values_column,
                             fields = ['id', 'firstName', 'lastName', 'email',
@@ -103,7 +103,7 @@ def extract_leads_by_filter(output_file,
         for lead_record in reader:
             filter_values_list.append(lead_record[filter_values_column])
                
-        leads = mc.execute(method = 'get_multiple_leads_by_filter_type',
+        leads = mc_object.execute(method = 'get_multiple_leads_by_filter_type',
                           filterType = filter_on,
                           filterValues = filter_values_list,
                           fields = fields,
@@ -122,6 +122,7 @@ def extract_leads_by_filter(output_file,
     
 def get_companies(output_file,
                   source_file,
+                  mc_object,
                   filter_on,
                   filter_values_column,
                   fields = ['id', 'firstName', 'lastName', 'email', 'updatedAt',
@@ -150,7 +151,7 @@ def get_companies(output_file,
         for company_record in reader:
             filter_values_list.append(company_record[filter_values_column])
                
-        companies = mc.execute(method = 'get_companies',
+        companies = mc_object.execute(method = 'get_companies',
                           filterType = filter_on,
                           filterValues = filter_values_list,
                           fields = fields,
@@ -171,6 +172,7 @@ def get_companies(output_file,
         
 def get_lead_activities(output_file,
                         source_file,
+                        mc_object,
                         since_date,
                         until_date):
     
@@ -193,7 +195,7 @@ def get_lead_activities(output_file,
     lead_ids = [str(int(i)) for i in lead_ids if str(i) != 'nan']
     activity_type_ids = [str(int(i)) for i in activity_type_ids if str(i) != 'nan']
     
-    results = mc.execute(method='get_lead_activities',
+    results = mc_object.execute(method='get_lead_activities',
                          activityTypeIds = activity_type_ids,
                          nextPageToken = None,
                          sinceDatetime = since_date,
@@ -231,7 +233,8 @@ def get_lead_activities(output_file,
 def get_lead_changes(output_file,
                      fields,
                      since_date,
-                     until_date):
+                     until_date,
+                     mc_object):
     
     """
     this function take very long to run
@@ -243,7 +246,7 @@ def get_lead_changes(output_file,
     """
     
       
-    results = mc.execute(method = 'get_lead_changes',
+    results = mc_object.execute(method = 'get_lead_changes',
                          fields = fields,
                          nextPageToken = None, 
                          sinceDatetime = since_date,
@@ -293,14 +296,15 @@ def get_lead_changes(output_file,
             dict_writer.writerows(results)
         
 def get_deleted_leads(output_file,
-                     since_date):
+                     since_date,
+                     mc_object):
     
     """
     output file: will contain first and last name, Marketo ID and time of deletion, but no additional Lead attributes    
     since_date
     """
     
-    results = mc.execute(method='get_deleted_leads', nextPageToken=None, sinceDatetime=date.today(), batchSize=None)  
+    results = mc_object.execute(method='get_deleted_leads', nextPageToken=None, sinceDatetime=date.today(), batchSize=None)  
    
     if len(results) == 0:
         print('No results!')
@@ -313,3 +317,48 @@ def get_deleted_leads(output_file,
             dict_writer.writeheader()
             dict_writer.writerows(results)
 
+def get_opportunities(output_file,
+                      source_file,
+                      mc_object,
+                      filter_on,
+                      filter_values_column,
+                      fields = ['id', 'firstName', 'lastName', 'email',
+                                'updatedAt', 'createdAt', 'Do Not Call Reason']):
+    """
+    Returns opportunities based on a filter and set of values.
+    source_file -  needs to contain a column with the values to input
+    to the filter
+    output_file - 
+    filter_values_column - the column in the source file that contains
+    the values to input to the filter
+    filter_on- specifies the field in API (e.g. "email")
+    fields - the fields in the API that will be returned
+    """
+    
+    with open(source_file, mode='rt', encoding='utf-8') as in_file,\
+         open(output_file, mode='w', encoding='utf-8') as out_file:
+            
+
+        leads = []
+        lazy_lines = (line for line in in_file)
+        reader = csv.DictReader(lazy_lines, lineterminator = '\n')
+        
+        filter_values_list = []
+        for lead_record in reader:
+            filter_values_list.append(lead_record[filter_values_column])
+               
+        leads = mc_object.execute(method = 'get_opportunities',
+                          filterType = filter_on,
+                          filterValues = filter_values_list,
+                          fields = fields,
+                          batchSize=None)
+        
+        if len(leads) > 0:
+            print('%i leads extracted', len(leads))
+        else:
+            print('No leads match the criteria!')
+        
+        keys = (fields)
+        dict_writer = csv.DictWriter(out_file, keys)
+        dict_writer.writeheader()
+        dict_writer.writerows(leads)
