@@ -10,7 +10,7 @@ import sys
 import os
 import logging
 from keboola import docker
-import functions
+import functions as fces
 
 ### Environment setup
 abspath = os.path.abspath(__file__)
@@ -62,38 +62,37 @@ def main():
     Main execution script.
     """
     logging.info('starting the main')
-    mc = MarketoClient(munchkin_id, client_id, client_secret)
     logging.info('mc read')
     if method == 'extract_leads_by_ids':
-        extract_leads_by_ids(output_file = DEFAULT_TABLE_DESTINATION + 'leads_by_ids.csv',
+        fces.extract_leads_by_ids(output_file = DEFAULT_TABLE_DESTINATION + 'leads_by_ids.csv',
                             source_file = DEFAULT_TABLE_INPUT + 'lead_ids_list_input.csv',
                             fields = desired_fields)
 
     elif method == 'extract_leads_by_filter':
-        extract_leads_by_filter(output_file = DEFAULT_TABLE_DESTINATION + 'leads_by_filter.csv',
+        fces.extract_leads_by_filter(output_file = DEFAULT_TABLE_DESTINATION + 'leads_by_filter.csv',
                             source_file = DEFAULT_TABLE_INPUT + 'lead_filter_input.csv',
                             filter_on = 'email',
                             filter_values_column = 'e-mail',
                             fields = desired_fields)
 
     elif method == 'get_deleted_leads':
-        get_deleted_leads(output_file = DEFAULT_TABLE_DESTINATION + 'deleted_leads.csv',
+        fces.get_deleted_leads(output_file = DEFAULT_TABLE_DESTINATION + 'deleted_leads.csv',
         since_date = since_date)
 
     elif method == 'get_lead_changes':
-        get_lead_changes(output_file = DEFAULT_TABLE_DESTINATION + 'lead_changes.csv',
+        fces.get_lead_changes(output_file = DEFAULT_TABLE_DESTINATION + 'lead_changes.csv',
                      fields = desired_fields,
                      since_date = since_date,
                      until_date = until_date)
 
     elif method == 'get_lead_activities':
-        get_lead_activities(output_file = DEFAULT_TABLE_DESTINATION + 'lead_activites.csv',
+        fces.get_lead_activities(output_file = DEFAULT_TABLE_DESTINATION + 'lead_activites.csv',
                         source_file = DEFAULT_TABLE_INPUT + 'lead_ids_act_ids.csv',
                         since_date = since_date,
                         until_date = until_date)
 
     elif method == 'get_companies':
-        get_companies(output_file = DEFAULT_TABLE_DESTINATION + 'companies.csv',
+        fces.get_companies(output_file = DEFAULT_TABLE_DESTINATION + 'companies.csv',
                   source_file = DEFAULT_TABLE_INPUT + 'lead_ids_act_ids.csv',
                   filter_on = 'email',
                   filter_values_column = 'e-mail',

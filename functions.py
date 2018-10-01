@@ -312,3 +312,4 @@ def get_deleted_leads(output_file,
             dict_writer = csv.DictWriter(out_file, keys)
             dict_writer.writeheader()
             dict_writer.writerows(results)
+
