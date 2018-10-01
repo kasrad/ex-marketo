@@ -1,28 +1,33 @@
 {"type":"object",
 "title":"Marketo Database",
-"required":["#munchkin_id","#client_id","#client_secret","method","desired_fields"],
+"required":["#munchkin_id","#client_id","#client_secret","method","desired_fields","since_date","until_date"],
 "properties":
-    {"method":
+    {"fields":{"type":"string","title":"fields","propertyOrder":4},
+    "method":
         {"enum":["extract_leads_by_ids","extract_leads_by_filter"],
         "type":"string",
         "title":"method",
         "default":"extract_leads_by_ids",
         "propertyOrder":5},
-    "#munchkin_id":
-        {"type":"string",
-        "title":"Munchkin ID token",
-        "propertyOrder":1},
-        "#client_id":
+    "#client_id":
         {"type":"string",
         "title":"Client ID token",
-        "propertyOrder":2}, 
-    "#client_secret":
-        {"type":"string",
+        "propertyOrder":2},
+    "#munchkin_id":{
+        "type":"string",
+        "title":"Munchkin ID token",
+        "propertyOrder":1},
+    "#client_secret":{
+        "type":"string",
         "title":"Client Secret token",
         "propertyOrder":3},
-    "fields":
-        {"type":"string",
-        "title":"fields",
-        "propertyOrder":4}
-    }
+    "until_date":{
+        "type":"string",
+        "title":"Until Date",
+        "propertyOrder":6},
+    "since_date":{
+            "type":"string",
+            "title":"Since Date",
+            "propertyOrder":7}
+        }
 }
