@@ -3,13 +3,14 @@ import pandas as pd
 from marketorestpython.client import MarketoClient
 import json
 
+
 def get_tables(in_tables):
     """
     Evaluate input and output table names.
     Only taking the first one into consideration!
     """
 
-    ### input file
+    # input file
     table = in_tables[0]
     in_name = table["full_path"]
     in_destination = table["destination"]
@@ -18,13 +19,14 @@ def get_tables(in_tables):
     
     return in_name
 
+
 def get_output_tables(out_tables):
     """
     Evaluate output table names.
     Only taking the first one into consideration!
     """
 
-    ### input file
+    # input file
     table = out_tables[0]
     in_name = table["full_path"]
     in_destination = table["source"]
@@ -63,15 +65,14 @@ def extract_leads_by_ids(output_file, source_file, mc_object,
      
         for lead_record in reader:
             lead_detail = mc_object.execute(method='get_lead_by_id',
-                                     id=lead_record["lead_id"])
-            if len(lead_detail) > 0 :
+                                            id=lead_record["lead_id"])
+            if len(lead_detail) > 0:
                 leads.append(lead_detail[0])
 
         keys = (fields)
         dict_writer = csv.DictWriter(out_file, keys)
         dict_writer.writeheader()
-        dict_writer.writerows(leads)
-        
+        dict_writer.writerows(leads)   
 
 
 def extract_leads_by_filter(output_file,
@@ -82,7 +83,7 @@ def extract_leads_by_filter(output_file,
                             fields = ['id', 'firstName', 'lastName', 'email',
                                       'updatedAt', 'createdAt', 'Do Not Call Reason']):
     """
-    Extracts leads based on filters 
+    Extracts leads based on filters
     source_file -  needs to contain a column with the values to input
     to the filter
     filter_values_column - the column in the source file that contains
@@ -94,7 +95,6 @@ def extract_leads_by_filter(output_file,
     with open(source_file, mode='rt', encoding='utf-8') as in_file,\
          open(output_file, mode='w', encoding='utf-8') as out_file:
             
-
         leads = []
         lazy_lines = (line for line in in_file)
         reader = csv.DictReader(lazy_lines, lineterminator = '\n')
@@ -142,7 +142,6 @@ def get_companies(output_file,
     with open(source_file, mode='rt', encoding='utf-8') as in_file,\
          open(output_file, mode='w', encoding='utf-8') as out_file:
             
-
         companies = []
         lazy_lines = (line for line in in_file)
         reader = csv.DictReader(lazy_lines, lineterminator = '\n')
@@ -152,10 +151,10 @@ def get_companies(output_file,
             filter_values_list.append(company_record[filter_values_column])
                
         companies = mc_object.execute(method = 'get_companies',
-                          filterType = filter_on,
-                          filterValues = filter_values_list,
-                          fields = fields,
-                          batchSize=None)
+                                      filterType = filter_on,
+                                      filterValues = filter_values_list,
+                                      fields = fields,
+                                      batchSize = None)
         
         if len(companies) > 0:
             print('%i companies extracted', len(companies))
@@ -166,10 +165,8 @@ def get_companies(output_file,
         dict_writer = csv.DictWriter(out_file, keys)
         dict_writer.writeheader()
         dict_writer.writerows(companies)
-        
-        
-        
-        
+
+
 def get_lead_activities(output_file,
                         source_file,
                         mc_object,
@@ -187,22 +184,22 @@ def get_lead_activities(output_file,
         
     activity_type_ids = list(pd.read_csv(source_file,
                                          skipinitialspace=True,
-                                         usecols=['activity_type_ids']).iloc[:,0])
+                                         usecols=['activity_type_ids']).iloc[:, 0])
     lead_ids = list(pd.read_csv(source_file,
-                                 skipinitialspace=True,
-                                 usecols=['lead_ids']).iloc[:,0])
+                                skipinitialspace=True,
+                                usecols=['lead_ids']).iloc[:, 0])
     
     lead_ids = [str(int(i)) for i in lead_ids if str(i) != 'nan']
     activity_type_ids = [str(int(i)) for i in activity_type_ids if str(i) != 'nan']
     
     results = mc_object.execute(method='get_lead_activities',
-                         activityTypeIds = activity_type_ids,
-                         nextPageToken = None,
-                         sinceDatetime = since_date,
-                         untilDatetime = until_date,
-                         batchSize = None,
-                         listId = None,
-                         leadIds = lead_ids)
+                                activityTypeIds = activity_type_ids,
+                                nextPageToken = None,
+                                sinceDatetime = since_date,
+                                untilDatetime = until_date,
+                                batchSize = None,
+                                listId = None,
+                                leadIds = lead_ids)
     
     if len(results) == 0:
         print('No results!')
@@ -220,7 +217,6 @@ def get_lead_activities(output_file,
         except KeyError:
             pass
             
-
     unique_keys = list(set(unique_keys))
 
     with open(output_file, mode='w', encoding='utf-8') as out_file:
@@ -229,7 +225,8 @@ def get_lead_activities(output_file,
             dict_writer = csv.DictWriter(out_file, keys)
             dict_writer.writeheader()
             dict_writer.writerows(results)
-            
+
+
 def get_lead_changes(output_file,
                      fields,
                      since_date,
@@ -238,21 +235,21 @@ def get_lead_changes(output_file,
     
     """
     this function take very long to run
-    output file: will contain columns based on the fields in extracted responses - it can definitely happen that different runs
-                    will produce different number of columns!!    
+    output file: will contain columns based on the fields in extracted responses
+     - it can definitely happen that different runs will produce different number of columns!!    
     since_date
     until_date
-    fields: list of field names to return changes for, field names can be retrieved with the Describe Lead API
+    fields: list of field names to return changes for, field names can be
+     retrieved with the Describe Lead API
     """
-    
-      
+        
     results = mc_object.execute(method = 'get_lead_changes',
-                         fields = fields,
-                         nextPageToken = None, 
-                         sinceDatetime = since_date,
-                         untilDatetime = until_date,
-                         batchSize = None,
-                         listId = None)
+                                fields = fields,
+                                nextPageToken = None, 
+                                sinceDatetime = since_date,
+                                untilDatetime = until_date,
+                                batchSize = None,
+                                listId = None)
    
     if len(results) == 0:
         print('No results!')
@@ -270,8 +267,6 @@ def get_lead_changes(output_file,
         except KeyError:
             pass
     
-    
-
         try:
             for l in range(len(i['fields'])):
                 i['name'] = i['fields'][l]['name']
@@ -284,7 +279,9 @@ def get_lead_changes(output_file,
             pass
 
         except TypeError:
-            pass            
+            pass
+
+        unique_keys.extend(list(i.keys()))            
 
     unique_keys = list(set(unique_keys))
 
@@ -295,9 +292,10 @@ def get_lead_changes(output_file,
             dict_writer.writeheader()
             dict_writer.writerows(results)
         
+
 def get_deleted_leads(output_file,
-                     since_date,
-                     mc_object):
+                      since_date,
+                      mc_object):
     
     """
     output file: will contain first and last name, Marketo ID and time of deletion,
@@ -306,9 +304,9 @@ def get_deleted_leads(output_file,
     """
     
     results = mc_object.execute(method='get_deleted_leads',
-                                 nextPageToken=None,
-                                 sinceDatetime=since_date,
-                                  batchSize=None)  
+                                nextPageToken=None,
+                                sinceDatetime=since_date,
+                                batchSize=None)  
    
     if len(results) == 0:
         print('No results!')
@@ -320,6 +318,7 @@ def get_deleted_leads(output_file,
             dict_writer = csv.DictWriter(out_file, keys)
             dict_writer.writeheader()
             dict_writer.writerows(results)
+
 
 def get_opportunities(output_file,
                       source_file,
@@ -342,7 +341,6 @@ def get_opportunities(output_file,
     with open(source_file, mode='rt', encoding='utf-8') as in_file,\
          open(output_file, mode='w', encoding='utf-8') as out_file:
             
-
         leads = []
         lazy_lines = (line for line in in_file)
         reader = csv.DictReader(lazy_lines, lineterminator = '\n')
@@ -352,10 +350,10 @@ def get_opportunities(output_file,
             filter_values_list.append(lead_record[filter_values_column])
                
         leads = mc_object.execute(method = 'get_opportunities',
-                          filterType = filter_on,
-                          filterValues = filter_values_list,
-                          fields = fields,
-                          batchSize=None)
+                                  filterType = filter_on,
+                                  filterValues = filter_values_list,
+                                  fields = fields,
+                                  batchSize=None)
         
         if len(leads) > 0:
             print('%i leads extracted', len(leads))

@@ -63,6 +63,7 @@ DEFAULT_TABLE_DESTINATION = "/data/out/tables/"
 
 # main
 
+
 def main():
     """
     Main execution script.
@@ -72,45 +73,44 @@ def main():
     logging.info('mc read')
     if method == 'extract_leads_by_ids':
         fces.extract_leads_by_ids(output_file = DEFAULT_TABLE_DESTINATION + 'leads_by_ids.csv',
-                            source_file = DEFAULT_TABLE_INPUT + 'lead_ids_list_input.csv',
-                            fields = desired_fields,
-                            mc_object = mc)
+                                  source_file = DEFAULT_TABLE_INPUT + 'lead_ids_list_input.csv',
+                                  fields = desired_fields,
+                                  mc_object = mc)
 
     elif method == 'extract_leads_by_filter':
         fces.extract_leads_by_filter(output_file = DEFAULT_TABLE_DESTINATION + 'leads_by_filter.csv',
-                            source_file = DEFAULT_TABLE_INPUT + 'lead_filter_input.csv',
-                            filter_on = 'email',
-                            filter_values_column = filter_column,
-                            fields = desired_fields,
-                            mc_object = mc)
+                                     source_file = DEFAULT_TABLE_INPUT + 'lead_filter_input.csv',
+                                     filter_on = 'email',
+                                     filter_values_column = filter_column,
+                                     fields = desired_fields,
+                                     mc_object = mc)
 
     elif method == 'get_deleted_leads':
         fces.get_deleted_leads(output_file = DEFAULT_TABLE_DESTINATION + 'deleted_leads.csv',
-                            since_date = since_date,
-                            mc_object = mc)
+                               since_date = since_date,
+                               mc_object = mc)
 
     elif method == 'get_lead_changes':
         fces.get_lead_changes(output_file = DEFAULT_TABLE_DESTINATION + 'lead_changes.csv',
-                     fields = desired_fields,
-                     since_date = since_date,
-                     until_date = until_date,
-                            mc_object = mc)
+                              fields = desired_fields,
+                              since_date = since_date,
+                              until_date = until_date,
+                              mc_object = mc)
 
     elif method == 'get_lead_activities':
         fces.get_lead_activities(output_file = DEFAULT_TABLE_DESTINATION + 'lead_activites.csv',
-                        source_file = DEFAULT_TABLE_INPUT + 'lead_ids_act_ids.csv',
-                        since_date = since_date,
-                        until_date = until_date,
-                            mc_object = mc)
+                                 source_file = DEFAULT_TABLE_INPUT + 'lead_ids_act_ids.csv',
+                                 since_date = since_date,
+                                 until_date = until_date,
+                                 mc_object = mc)
 
     elif method == 'get_companies':
         fces.get_companies(output_file = DEFAULT_TABLE_DESTINATION + 'companies.csv',
-                  source_file = DEFAULT_TABLE_INPUT + 'lead_ids_act_ids.csv',
-                  filter_on = 'email',
-                  filter_values_column = filter_column,
-                  fields = desired_fields,
-                  mc_object = mc)
-
+                           source_file = DEFAULT_TABLE_INPUT + 'lead_ids_act_ids.csv',
+                           filter_on = 'email',
+                           filter_values_column = filter_column,
+                           fields = desired_fields,
+                           mc_object = mc)
 
 
 if __name__ == "__main__":
