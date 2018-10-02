@@ -1,33 +1,65 @@
-{"type":"object",
-"title":"Marketo Database",
-"required":["#munchkin_id","#client_id","#client_secret","method","desired_fields","since_date","until_date"],
-"properties":
-    {"fields":{"type":"string","title":"fields","propertyOrder":4},
-    "method":
-        {"enum":["extract_leads_by_ids","extract_leads_by_filter"],
-        "type":"string",
-        "title":"method",
-        "default":"extract_leads_by_ids",
-        "propertyOrder":5},
-    "#client_id":
-        {"type":"string",
-        "title":"Client ID token",
-        "propertyOrder":2},
-    "#munchkin_id":{
-        "type":"string",
-        "title":"Munchkin ID token",
-        "propertyOrder":1},
-    "#client_secret":{
-        "type":"string",
-        "title":"Client Secret token",
-        "propertyOrder":3},
-    "until_date":{
-        "type":"string",
-        "title":"Until Date",
-        "propertyOrder":6},
-    "since_date":{
-            "type":"string",
-            "title":"Since Date",
-            "propertyOrder":7}
-        }
+{
+  "type": "object",
+  "title": "Marketo Database",
+  "required": [
+    "#munchkin_id",
+    "#client_id",
+    "#client_secret",
+    "method",
+    "since_date",
+    "until_date",
+    "filter_column",
+    "desired_fields"
+  ],
+  "properties": {
+    "method": {
+      "enum": [
+        "extract_leads_by_ids",
+        "extract_leads_by_filter",
+        "get_deleted_leads",
+        "get_lead_changes",
+        "get_lead_activities",
+        "get_companies"
+      ],
+      "type": "string",
+      "title": "Method",
+      "default": "extract_leads_by_ids",
+      "propertyOrder": 5
+    },
+    "#client_id": {
+      "type": "string",
+      "title": "Client ID token",
+      "propertyOrder": 2
+    },
+    "since_date": {
+      "type": "string",
+      "title": "Since Date",
+      "propertyOrder": 7
+    },
+    "until_date": {
+      "type": "string",
+      "title": "Until Date",
+      "propertyOrder": 6
+    },
+    "#munchkin_id": {
+      "type": "string",
+      "title": "Munchkin ID token",
+      "propertyOrder": 1
+    },
+    "filter_column": {
+      "type": "string",
+      "title": "Filter Values Column",
+      "propertyOrder": 8
+    },
+    "#client_secret": {
+      "type": "string",
+      "title": "Client Secret token",
+      "propertyOrder": 3
+    },
+    "desired_fields": {
+      "type": "string",
+      "title": "Desired Fields",
+      "propertyOrder": 4
+    }
+  }
 }
