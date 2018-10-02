@@ -104,10 +104,10 @@ def extract_leads_by_filter(output_file,
             filter_values_list.append(lead_record[filter_values_column])
                
         leads = mc_object.execute(method = 'get_multiple_leads_by_filter_type',
-                          filterType = filter_on,
-                          filterValues = filter_values_list,
-                          fields = fields,
-                          batchSize=None)
+                                  filterType = filter_on,
+                                  filterValues = filter_values_list,
+                                  fields = fields,
+                                  batchSize = None)
         
         if len(leads) > 0:
             print('%i leads extracted', len(leads))
@@ -179,8 +179,8 @@ def get_lead_activities(output_file,
     """
     source file: has to contain columns 'activity_type_ids' and 'lead_ids'. These
     must contain the values corresponding for the query.
-    output file: will contain columns based on the fields in extracted responses - it can definitely happen that different runs
-                    will produce different number of columns!!    
+    output file: will contain columns based on the fields in extracted responses 
+    - it can definitely happen that different runs will produce different number of columns!!    
     since_date
     until_date
     """
@@ -300,7 +300,8 @@ def get_deleted_leads(output_file,
                      mc_object):
     
     """
-    output file: will contain first and last name, Marketo ID and time of deletion, but no additional Lead attributes    
+    output file: will contain first and last name, Marketo ID and time of deletion,
+    but no additional Lead attributes    
     since_date
     """
     

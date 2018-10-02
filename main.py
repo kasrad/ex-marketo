@@ -10,54 +10,59 @@ import sys
 import os
 import logging
 from keboola import docker
-import functions as fces
 from marketorestpython.client import MarketoClient
+import functions as fces
 
-### Environment setup
+# Environment setup
 abspath = os.path.abspath(__file__)
 script_path = os.path.dirname(abspath)
 os.chdir(script_path)
 
-### Logging
+# Logging
 logging.basicConfig(
     level=logging.INFO,
     format='%(asctime)s - %(levelname)s - %(message)s',
     datefmt="%Y-%m-%d %H:%M:%S")
 
-### Access the supplied rules
+# Access the supplied rules
 cfg = docker.Config('/data/')
 params = cfg.get_parameters()
 logging.info("params read")
-client_id = cfg.get_parameters()["#client_id"] # enter Client ID from Admin > LaunchPoint > View Details
-munchkin_id = cfg.get_parameters()["#munchkin_id"] # fill in Munchkin ID, typical format 000-AAA-000
-client_secret = cfg.get_parameters()["#client_secret"] # enter Client ID and Secret from Admin > LaunchPoint > View Details
+
+# enter Client ID from Admin > LaunchPoint > View Details
+# fill in Munchkin ID, typical format 000-AAA-000
+# enter Client ID and Secret from Admin > LaunchPoint > View Details
+
+client_id = cfg.get_parameters()["#client_id"] 
+munchkin_id = cfg.get_parameters()["#munchkin_id"]
+client_secret = cfg.get_parameters()["#client_secret"]
 method = cfg.get_parameters()["method"]
 desired_fields = cfg.get_parameters()["desired_fields"]
-since_date = cfg.get_parameters()["since_date"] #YYYY-MM-DD
-until_date = cfg.get_parameters()["until_date"] #YYYY-MM-DD
+since_date = cfg.get_parameters()["since_date"]  # YYYY-MM-DD
+until_date = cfg.get_parameters()["until_date"]
+filter_column = cfg.get_parameters()["filter_column"]  # YYYY-MM-DD
 desired_fields = desired_fields.split()
 logging.info("config successfuly read")
 
-### Get proper list of tables
+# Get proper list of tables
 in_tables = cfg.get_input_tables()
 out_tables = cfg.get_expected_output_tables()
 out_files = cfg.get_expected_output_files()
-logging.info("IN tables mapped: "+str(in_tables))
+logging.info("IN tables mapped: " + str(in_tables))
 # logging.info("IN files mapped: "+str(in_files))
-logging.info("OUT tables mapped: "+str(out_tables))
-logging.info("OUT files mapped: "+str(out_files))
+logging.info("OUT tables mapped: " + str(out_tables))
+logging.info("OUT files mapped: " + str(out_files))
 
 
-### destination to fetch and output files and tables
+# Destination to fetch and output files and tables
 DEFAULT_TABLE_INPUT = "/data/in/tables/"
 DEFAULT_FILE_INPUT = "/data/in/files/"
 
 DEFAULT_FILE_DESTINATION = "/data/out/files/"
 DEFAULT_TABLE_DESTINATION = "/data/out/tables/"
 
+# main
 
-        
-    
 def main():
     """
     Main execution script.
@@ -75,7 +80,7 @@ def main():
         fces.extract_leads_by_filter(output_file = DEFAULT_TABLE_DESTINATION + 'leads_by_filter.csv',
                             source_file = DEFAULT_TABLE_INPUT + 'lead_filter_input.csv',
                             filter_on = 'email',
-                            filter_values_column = 'e-mail',
+                            filter_values_column = filter_column,
                             fields = desired_fields,
                             mc_object = mc)
 
@@ -102,18 +107,10 @@ def main():
         fces.get_companies(output_file = DEFAULT_TABLE_DESTINATION + 'companies.csv',
                   source_file = DEFAULT_TABLE_INPUT + 'lead_ids_act_ids.csv',
                   filter_on = 'email',
-                  filter_values_column = 'e-mail',
+                  filter_values_column = filter_column,
                   fields = desired_fields,
                   mc_object = mc)
-        
 
-    
-    
-    
-
-    
-
-    
 
 
 if __name__ == "__main__":
