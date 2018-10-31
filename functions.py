@@ -2,7 +2,12 @@ import csv
 import pandas as pd
 from marketorestpython.client import MarketoClient
 import json
+import logging
 
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s - %(levelname)s - %(message)s',
+    datefmt="%Y-%m-%d %H:%M:%S")
 
 def get_tables(in_tables):
     """
@@ -234,7 +239,7 @@ def get_lead_changes(output_file,
                      mc_object):
     
     """
-    this function take very long to run
+    this function takes very long to run
     output file: will contain columns based on the fields in extracted responses
      - it can definitely happen that different runs will produce different number of columns!!    
     since_date
@@ -242,7 +247,7 @@ def get_lead_changes(output_file,
     fields: list of field names to return changes for, field names can be
      retrieved with the Describe Lead API
     """
-        
+    logging.info('function get_lead_changes started')    
     results = mc_object.execute(method = 'get_lead_changes',
                                 fields = fields,
                                 nextPageToken = None, 
@@ -250,7 +255,7 @@ def get_lead_changes(output_file,
                                 untilDatetime = until_date,
                                 batchSize = None,
                                 listId = None)
-   
+    logging.info(str(len(results)) + ' results fetched')
     if len(results) == 0:
         print('No results!')
         return

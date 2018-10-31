@@ -24,42 +24,51 @@
       "type": "string",
       "title": "Method",
       "default": "extract_leads_by_ids",
-      "propertyOrder": 5
+      "propertyOrder": 5,
+      "description": "Denotes the endpoint."
     },
     "#client_id": {
       "type": "string",
       "title": "Client ID token",
+      "format": "password",
       "propertyOrder": 2
     },
     "since_date": {
       "type": "string",
       "title": "Since Date",
-      "propertyOrder": 7
+      "propertyOrder": 7,
+      "description" : "Relevant only for some endpoints."
     },
     "until_date": {
       "type": "string",
       "title": "Until Date",
-      "propertyOrder": 6
+      "propertyOrder": 6,
+      "description" : "Relevant only for some endpoints."
     },
     "#munchkin_id": {
       "type": "string",
       "title": "Munchkin ID token",
-      "propertyOrder": 1
+      "format": "password",
+      "propertyOrder": 1,
+      "description": "The first part of Identity. Can be found in Admin > Web Services menu in the REST API section"
     },
     "filter_column": {
       "type": "string",
       "title": "Filter Values Column",
-      "propertyOrder": 8
+      "propertyOrder": 8,
+      "description": "Denotes the column in the input file that contains the values you want to filter for. Relevant only for extract_leads_by_filter."
     },
     "#client_secret": {
       "type": "string",
       "title": "Client Secret token",
+      "format": "password",
       "propertyOrder": 3
     },
     "desired_fields": {
       "type": "string",
       "title": "Desired Fields",
-      "propertyOrder": 4
+      "propertyOrder": 4,
+      "description": "Write down the column names you want to extract and separate them by white space. Relevant to only to some endpoints."
     }
   }
 }
