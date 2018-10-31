@@ -18,6 +18,8 @@ abspath = os.path.abspath(__file__)
 script_path = os.path.dirname(abspath)
 os.chdir(script_path)
 
+sys.tracebacklimit = None
+
 # Logging
 logging.basicConfig(
     level=logging.INFO,
@@ -53,6 +55,15 @@ logging.info("IN tables mapped: " + str(in_tables))
 logging.info("OUT tables mapped: " + str(out_tables))
 logging.info("OUT files mapped: " + str(out_files))
 
+if len(in_tables) > 1:
+    logging.error("Please use only one table as input table.")
+    sys.exit(1)
+elif len(in_tables) == 0:
+    logging.error("No input table was specified. Please specify a table.")
+    sys.exit(1)
+else:
+    pass
+
 
 # Destination to fetch and output files and tables
 DEFAULT_TABLE_INPUT = "/data/in/tables/"
@@ -73,7 +84,7 @@ def main():
     logging.info('mc read')
     if method == 'extract_leads_by_ids':
         fces.extract_leads_by_ids(output_file = DEFAULT_TABLE_DESTINATION + 'leads_by_ids.csv',
-                                  source_file = DEFAULT_TABLE_INPUT + 'lead_ids_list_input.csv',
+                                  source_file = DEFAULT_TABLE_INPUT + input_tables[0]['destination'],
                                   fields = desired_fields,
                                   mc_object = mc)
 
