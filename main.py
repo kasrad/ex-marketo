@@ -84,7 +84,7 @@ def main():
     logging.info('mc read')
     if method == 'extract_leads_by_ids':
         fces.extract_leads_by_ids(output_file = DEFAULT_TABLE_DESTINATION + 'leads_by_ids.csv',
-                                  source_file = DEFAULT_TABLE_INPUT + input_tables[0]['destination'],
+                                  source_file = DEFAULT_TABLE_INPUT + in_tables[0]['destination'],
                                   fields = desired_fields,
                                   mc_object = mc)
 
