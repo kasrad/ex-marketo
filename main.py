@@ -56,10 +56,7 @@ logging.info("OUT tables mapped: " + str(out_tables))
 logging.info("OUT files mapped: " + str(out_files))
 
 if len(in_tables) > 1:
-    logging.error("Please use only one table as input table.")
-    sys.exit(1)
-elif len(in_tables) == 0:
-    logging.error("No input table was specified. Please specify a table.")
+    logging.error("Please don't use more than one table as input table.")
     sys.exit(1)
 else:
     pass
@@ -90,7 +87,8 @@ def main():
 
     elif method == 'extract_leads_by_filter':
         fces.extract_leads_by_filter(output_file = DEFAULT_TABLE_DESTINATION + 'leads_by_filter.csv',
-                                     source_file = DEFAULT_TABLE_INPUT + 'lead_filter_input.csv',
+                                     source_file=DEFAULT_TABLE_INPUT +
+                                     in_tables[0]['destination'],
                                      filter_on = 'email',
                                      filter_values_column = filter_column,
                                      fields = desired_fields,
@@ -110,14 +108,16 @@ def main():
 
     elif method == 'get_lead_activities':
         fces.get_lead_activities(output_file = DEFAULT_TABLE_DESTINATION + 'lead_activites.csv',
-                                 source_file = DEFAULT_TABLE_INPUT + 'lead_ids_act_ids.csv',
+                                 source_file=DEFAULT_TABLE_INPUT +
+                                 in_tables[0]['destination'],
                                  since_date = since_date,
                                  until_date = until_date,
                                  mc_object = mc)
 
     elif method == 'get_companies':
         fces.get_companies(output_file = DEFAULT_TABLE_DESTINATION + 'companies.csv',
-                           source_file = DEFAULT_TABLE_INPUT + 'lead_ids_act_ids.csv',
+                           source_file=DEFAULT_TABLE_INPUT +
+                           in_tables[0]['destination'],
                            filter_on = 'email',
                            filter_values_column = filter_column,
                            fields = desired_fields,
