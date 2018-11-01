@@ -41,8 +41,8 @@ client_secret = cfg.get_parameters()["#client_secret"]
 method = cfg.get_parameters()["method"]
 desired_fields = cfg.get_parameters()["desired_fields"]
 since_date = cfg.get_parameters()["since_date"]  # YYYY-MM-DD
-until_date = cfg.get_parameters()["until_date"]
-filter_column = cfg.get_parameters()["filter_column"]  # YYYY-MM-DD
+until_date = cfg.get_parameters()["until_date"]  # YYYY-MM-DD
+filter_column = cfg.get_parameters()["filter_column"]  
 desired_fields = desired_fields.split()
 logging.info("config successfuly read")
 
@@ -54,6 +54,7 @@ logging.info("IN tables mapped: " + str(in_tables))
 # logging.info("IN files mapped: "+str(in_files))
 logging.info("OUT tables mapped: " + str(out_tables))
 logging.info("OUT files mapped: " + str(out_files))
+logging.info(filter_column)
 
 if len(in_tables) > 1:
     logging.error("Please don't use more than one table as input table.")
