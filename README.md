@@ -26,6 +26,36 @@ There are 10 options in the UI:
 - Since Date
 - Filter Values Column. *Denotes the column in the input file that contains the values you want to filter for*
 
+## Endpoints
+- extract_leads_by_ids
+    * Takes in _Desired Fields_ parameter
+    * The output is mapped to `leads_by_ids`
+    * The input needs to contain column with name `lead_id` with list of id
+    * The _Desired Fields_ parameter denotes which fields should be retrieved
+- extract_leads_by_filter
+    * Takes in _Desired Fields_ and _Filter Values Column_ parameter
+    * The output is mapped to `leads_by_filter`
+    * The input needs to contain column with the values to input to the filter (the column is specified by the _Filter Values Column_)
+    * The _Desired Fields_ parameter denotes which fields should be retrieved
+    * Current functionality allows only filtering on e-mail
+- get_lead_activities
+    * Takes in _Since Date_ and _until_date_ parameter
+    * The output is mapped to `lead_activites`
+    * The input needs to contain columns 'activity_type_ids' and 'lead_ids'
+    * output file will contain columns based on the fields in extracted responses 
+    * it can definitely happen that different runs will produce different number of columns!!
+    * _Since Date_ and _until_date_ parameters are self-explanatory
+- get_lead_changes
+    * Takes in _Since Date, Until Date_ and _Desired Fields_ parameter
+    * The output is mapped to `lead_changes`
+    * Output file will contain columns based on the fields in extracted responses 
+    * It can definitely happen that different runs will produce different number of columns!!
+    * _Since Date_  and _Until Date_ parameters are self-explanatory
+    * _Desired Fields_ parameter denotes the list of field names to return changes for, field names can be retrieved with the Describe Lead API
+- get_deleted_leads
+    * Takes in the _Since Date_ parameter
+    * The output is mapped to `deleted_leads`
+
 
 
 
