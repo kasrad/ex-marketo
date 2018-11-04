@@ -42,8 +42,9 @@ method = cfg.get_parameters()["method"]
 desired_fields = cfg.get_parameters()["desired_fields"]
 since_date = cfg.get_parameters()["since_date"]  # YYYY-MM-DD
 until_date = cfg.get_parameters()["until_date"]  # YYYY-MM-DD
-filter_column = cfg.get_parameters()["filter_column"]  
-desired_fields = desired_fields.split()
+filter_column = cfg.get_parameters()["filter_column"]
+filter_field = cfg.get_parameters()["filter_field"]
+desired_fields = [i.strip() for i in desired_fields.split(",")]
 logging.info("config successfuly read")
 
 # Get proper list of tables
@@ -90,7 +91,7 @@ def main():
         fces.extract_leads_by_filter(output_file = DEFAULT_TABLE_DESTINATION + 'leads_by_filter.csv',
                                      source_file=DEFAULT_TABLE_INPUT +
                                      in_tables[0]['destination'],
-                                     filter_on = 'email',
+                                     filter_on = filter_field,
                                      filter_values_column = filter_column,
                                      fields = desired_fields,
                                      mc_object = mc)
@@ -119,10 +120,15 @@ def main():
         fces.get_companies(output_file = DEFAULT_TABLE_DESTINATION + 'companies.csv',
                            source_file=DEFAULT_TABLE_INPUT +
                            in_tables[0]['destination'],
-                           filter_on = 'email',
+                           filter_on = filter_field,
                            filter_values_column = filter_column,
                            fields = desired_fields,
                            mc_object = mc)
+
+    elif method == 'get_campaigns':
+        fces.get_campaigns(
+            output_file=DEFAULT_TABLE_DESTINATION + 'companies.csv',
+            mc_object = mc)
 
 
 if __name__ == "__main__":

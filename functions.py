@@ -369,3 +369,25 @@ def get_opportunities(output_file,
         dict_writer = csv.DictWriter(out_file, keys)
         dict_writer.writeheader()
         dict_writer.writerows(leads)
+
+
+def get_campaigns(output_file, mc_object):
+
+    '''
+    extract all the campaigns
+    '''
+    results = mc_object.execute(method='get_multiple_campaigns')
+
+        if len(results) > 0:
+            print('%i campaigns extracted', len(leads))
+        else:
+            print('No campaigns found!')
+
+        keys = ['id', 'name', 'description', 'type', 'programName',
+                'programId', 'workspaceName', 'createdAt', 'updatedAt', 'active']
+
+     with open(output_file, mode='w', encoding='utf-8') as out_file:
+
+            dict_writer = csv.DictWriter(out_file, keys)
+            dict_writer.writeheader()
+            dict_writer.writerows(results)
