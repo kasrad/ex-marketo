@@ -33,7 +33,7 @@ There are 10 options in the UI:
     * The input needs to contain column with name `lead_id` with list of id
     * The _Desired Fields_ parameter denotes which fields should be retrieved
 - extract_leads_by_filter
-    * Takes in _Desired Fields_ and _Filter Values Column_ parameter
+    * Takes in _Desired Fields_ and _Column with Filter Values_ parameter
     * The output is mapped to `leads_by_filter`
     * The input needs to contain column with the values to input to the filter (the column is specified by the _Filter Values Column_)
     * The _Desired Fields_ parameter denotes which fields should be retrieved
@@ -55,6 +55,12 @@ There are 10 options in the UI:
 - get_deleted_leads
     * Takes in the _Since Date_ parameter
     * The output is mapped to `deleted_leads`
+- get_campaigns
+    * Takes in the _Field to filter on_ and _Column with Filter Values_
+    * If the above parameters are left blank, all campaigns are retrieved
+    * The output is mapped to `campaigns`
+    
+
 
 
 
