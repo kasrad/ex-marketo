@@ -24,7 +24,8 @@ There are 10 options in the UI:
 - Method. *denotes the endpoint*
 - Until Date
 - Since Date
-- Filter Values Column. *Denotes the column in the input file that contains the values you want to filter for*
+- Column with Filter Values *Denotes the column in the input file that contains the values you want to filter for*
+- Field to filter on *Denotes the field in the API to filter on*
 
 ## Endpoints
 - extract_leads_by_ids
