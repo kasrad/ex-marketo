@@ -378,16 +378,17 @@ def get_campaigns(output_file, mc_object):
     '''
     results = mc_object.execute(method='get_multiple_campaigns')
 
-        if len(results) > 0:
-            print('%i campaigns extracted', len(leads))
-        else:
-            print('No campaigns found!')
+    if len(results) > 0:
+        logging.info('%i campaigns extracted', len(leads))
+    else:
+        logging.info('No campaigns found!')
+        return
 
-        keys = ['id', 'name', 'description', 'type', 'programName',
-                'programId', 'workspaceName', 'createdAt', 'updatedAt', 'active']
+    keys = ['id', 'name', 'description', 'type', 'programName',
+            'programId', 'workspaceName', 'createdAt', 'updatedAt', 'active']
+    
+    with open(output_file, mode='w', encoding='utf-8') as out_file:
 
-     with open(output_file, mode='w', encoding='utf-8') as out_file:
-
-            dict_writer = csv.DictWriter(out_file, keys)
-            dict_writer.writeheader()
-            dict_writer.writerows(results)
+        dict_writer = csv.DictWriter(out_file, keys)
+        dict_writer.writeheader()
+        dict_writer.writerows(results)
