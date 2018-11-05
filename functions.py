@@ -381,14 +381,16 @@ def get_campaigns(output_file, mc_object, source_file, filter_values_column):
     
     try:
         with open(source_file, mode='rt', encoding='utf-8') as in_file,\
-             open(output_file, mode='w', encoding='utf-8') as out_file:
+            open(output_file, mode='w', encoding='utf-8') as out_file:
+            
+            logging.info('Extracting specific campaigns based on id.')
 
             lazy_lines = (line for line in in_file)
             reader = csv.DictReader(lazy_lines, lineterminator='\n')
 
             id_values_list = []
             for record in reader:
-                id_values_list.append(lead_record[filter_values_column])
+                id_values_list.append(record[filter_values_column])
 
             results = mc_object.execute(method='get_multiple_campaigns',
                                         id = id_values_list
@@ -407,6 +409,7 @@ def get_campaigns(output_file, mc_object, source_file, filter_values_column):
         
     except FileNotFoundError:
         results = mc_object.execute(method='get_multiple_campaigns')
+        logging.info('No input file specified, extracting all campaigns.')
 
         if len(results) > 0:
             print('%i campaigns extracted', len(results))
