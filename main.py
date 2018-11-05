@@ -39,13 +39,14 @@ client_id = cfg.get_parameters()["#client_id"]
 munchkin_id = cfg.get_parameters()["#munchkin_id"]
 client_secret = cfg.get_parameters()["#client_secret"]
 method = cfg.get_parameters()["method"]
-desired_fields = cfg.get_parameters()["desired_fields"]
+desired_fields_tmp = cfg.get_parameters()["desired_fields"]
 since_date = cfg.get_parameters()["since_date"]  # YYYY-MM-DD
 until_date = cfg.get_parameters()["until_date"]  # YYYY-MM-DD
 filter_column = cfg.get_parameters()["filter_column"]
 filter_field = cfg.get_parameters()["filter_field"]
-desired_fields = [i.strip() for i in desired_fields.split(",")]
+desired_fields = [i.strip() for i in desired_fields_tmp.split(",")]
 logging.info("config successfuly read")
+logging.info(desired_fields)
 
 # Get proper list of tables
 in_tables = cfg.get_input_tables()

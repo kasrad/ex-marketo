@@ -379,7 +379,7 @@ def get_campaigns(output_file, mc_object):
     results = mc_object.execute(method='get_multiple_campaigns')
 
     if len(results) > 0:
-        logging.info('%i campaigns extracted', len(leads))
+        logging.info('%i campaigns extracted', len(results))
     else:
         logging.info('No campaigns found!')
         return
