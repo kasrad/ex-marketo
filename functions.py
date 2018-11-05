@@ -345,6 +345,7 @@ def get_opportunities(output_file,
     
     with open(source_file, mode='rt', encoding='utf-8') as in_file,\
          open(output_file, mode='w', encoding='utf-8') as out_file:
+
             
         leads = []
         lazy_lines = (line for line in in_file)
@@ -371,24 +372,54 @@ def get_opportunities(output_file,
         dict_writer.writerows(leads)
 
 
-def get_campaigns(output_file, mc_object):
+def get_campaigns(output_file, mc_object, source_file, filter_values_column):
 
     '''
-    extract all the campaigns
+    extract all the campaigns, if id argument is left blank, all campaigns are
+    retrieved
     '''
-    results = mc_object.execute(method='get_multiple_campaigns')
-
-    if len(results) > 0:
-        logging.info('%i campaigns extracted', len(results))
-    else:
-        logging.info('No campaigns found!')
-        return
-
-    keys = ['id', 'name', 'description', 'type', 'programName',
-            'programId', 'workspaceName', 'createdAt', 'updatedAt', 'active']
     
-    with open(output_file, mode='w', encoding='utf-8') as out_file:
+    try:
+        with open(source_file, mode='rt', encoding='utf-8') as in_file,\
+             open(output_file, mode='w', encoding='utf-8') as out_file:
 
-        dict_writer = csv.DictWriter(out_file, keys)
-        dict_writer.writeheader()
-        dict_writer.writerows(results)
+            lazy_lines = (line for line in in_file)
+            reader = csv.DictReader(lazy_lines, lineterminator='\n')
+
+            id_values_list = []
+            for record in reader:
+                id_values_list.append(lead_record[filter_values_column])
+
+            results = mc_object.execute(method='get_multiple_campaigns',
+                                        id = id_values_list
+                                        )
+
+            if len(results) > 0:
+                print('%i campaigns extracted', len(results))
+            else:
+                print('No campaigns match the criteria!')
+
+            keys = ['id', 'name', 'description', 'type', 'programName',
+                    'programId', 'workspaceName', 'createdAt', 'updatedAt', 'active']
+            dict_writer = csv.DictWriter(out_file, keys)
+            dict_writer.writeheader()
+            dict_writer.writerows(leads)
+        
+    except FileNotFoundError:
+        results = mc_object.execute(method='get_multiple_campaigns')
+
+        if len(results) > 0:
+            print('%i campaigns extracted', len(results))
+        else:
+            print('No campaigns match the criteria!')
+
+        keys = ['id', 'name', 'description', 'type', 'programName',
+                'programId', 'workspaceName', 'createdAt', 'updatedAt', 'active']
+        
+        with open(output_file, mode='w', encoding='utf-8') as out_file:
+            dict_writer = csv.DictWriter(out_file, keys)
+            dict_writer.writeheader()
+            dict_writer.writerows(leads)
+
+
+

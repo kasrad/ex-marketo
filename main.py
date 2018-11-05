@@ -129,7 +129,10 @@ def main():
     elif method == 'get_campaigns':
         fces.get_campaigns(
             output_file=DEFAULT_TABLE_DESTINATION + 'campaigns.csv',
-            mc_object = mc)
+            source_file=DEFAULT_TABLE_INPUT +
+            in_tables[0]['destination'],
+            mc_object = mc,
+            filter_values_column = filter_column)
 
 
 if __name__ == "__main__":
