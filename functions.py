@@ -397,15 +397,15 @@ def get_campaigns(output_file, mc_object, source_file, filter_values_column):
                                         )
 
             if len(results) > 0:
-                print('%i campaigns extracted', len(results))
+                logging.info('%i campaigns extracted', len(results))
             else:
-                print('No campaigns match the criteria!')
+                logging.info('No campaigns match the criteria!')
 
             keys = ['id', 'name', 'description', 'type', 'programName',
                     'programId', 'workspaceName', 'createdAt', 'updatedAt', 'active']
             dict_writer = csv.DictWriter(out_file, keys)
             dict_writer.writeheader()
-            dict_writer.writerows(leads)
+            dict_writer.writerows(results)
         
     except FileNotFoundError:
         results = mc_object.execute(method='get_multiple_campaigns')
@@ -422,7 +422,7 @@ def get_campaigns(output_file, mc_object, source_file, filter_values_column):
         with open(output_file, mode='w', encoding='utf-8') as out_file:
             dict_writer = csv.DictWriter(out_file, keys)
             dict_writer.writeheader()
-            dict_writer.writerows(leads)
+            dict_writer.writerows(results)
 
 
 
