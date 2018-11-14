@@ -117,7 +117,7 @@ def main():
                                  until_date = until_date,
                                  mc_object = mc)
 
-    elif method == 'get_companies':
+    elif method == 'get_companies' and len(in_tables):
         fces.get_companies(output_file = DEFAULT_TABLE_DESTINATION + 'companies.csv',
                            source_file=DEFAULT_TABLE_INPUT +
                            in_tables[0]['destination'],
@@ -126,11 +126,17 @@ def main():
                            fields = desired_fields,
                            mc_object = mc)
 
-    elif method == 'get_campaigns':
+    elif method == 'get_campaigns' and len(in_tables) != 0:
         fces.get_campaigns(
             output_file=DEFAULT_TABLE_DESTINATION + 'campaigns.csv',
             source_file=DEFAULT_TABLE_INPUT +
             in_tables[0]['destination'],
+            mc_object = mc,
+            filter_values_column = filter_column)
+    
+    elif method == 'get_campaigns' and len(in_tables) == 0:
+       fces.get_campaigns(
+            output_file=DEFAULT_TABLE_DESTINATION + 'campaigns.csv',
             mc_object = mc,
             filter_values_column = filter_column)
 

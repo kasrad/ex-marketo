@@ -372,7 +372,10 @@ def get_opportunities(output_file,
         dict_writer.writerows(leads)
 
 
-def get_campaigns(output_file, mc_object, source_file, filter_values_column):
+def get_campaigns(output_file,
+                 mc_object,
+                 source_file = 'blankblank.csv',
+                 filter_values_column):
 
     '''
     extract all the campaigns, if id argument is left blank, all campaigns are
