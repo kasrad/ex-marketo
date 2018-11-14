@@ -27,7 +27,7 @@ There are 10 options in the UI:
 - Since Date
 - Column with Filter Values *Denotes the column in the input file that contains the values you want to filter for*
 - Field to filter on *Denotes the field in the API to filter on*
-- How many days back you want to go? *Alternative to Since Date. The Until Date is automatically set to current date if this field is used.
+- How many days back you want to go? *Alternative to Since Date. The Until Date is automatically set to current date if this field is used.*
 
 ## Endpoints
 - extract_leads_by_ids
@@ -60,7 +60,7 @@ There are 10 options in the UI:
     * The output is mapped to `deleted_leads`
 - get_campaigns
     * Takes in the _Field to filter on_ and _Column with Filter Values_
-    * If the above parameters are left blank, all campaigns are retrieved
+    * If the above parameters are left blank, all campaigns are retrieved.
     * The output is mapped to `campaigns`
     
 
