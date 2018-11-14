@@ -11,7 +11,9 @@ import os
 import logging
 from keboola import docker
 from marketorestpython.client import MarketoClient
+from datetime import datetime, timedelta
 import functions as fces
+
 
 # Environment setup
 abspath = os.path.abspath(__file__)
@@ -44,6 +46,7 @@ since_date = cfg.get_parameters()["since_date"]  # YYYY-MM-DD
 until_date = cfg.get_parameters()["until_date"]  # YYYY-MM-DD
 filter_column = cfg.get_parameters()["filter_column"]
 filter_field = cfg.get_parameters()["filter_field"]
+dayspan = cfg.get_parameters()["dayspan"]
 desired_fields = [i.strip() for i in desired_fields_tmp.split(",")]
 logging.info("config successfuly read")
 logging.info(desired_fields)
@@ -64,6 +67,15 @@ if len(in_tables) > 1:
 else:
     pass
 
+if since_date != '' and dayspan != '':
+    logging.error("Please add either since_date or dayspan, not both.")
+    sys.exit(1)
+elif since_date == '' and dayspan != '':
+    since_date = (datetime.utcnow() - timedelta(days=int(dayspan)))\
+        .date()
+    until_date = datetime.utcnow().date()
+else:
+    pass
 
 # Destination to fetch and output files and tables
 DEFAULT_TABLE_INPUT = "/data/in/tables/"
