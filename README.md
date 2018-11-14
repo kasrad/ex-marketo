@@ -27,6 +27,7 @@ There are 10 options in the UI:
 - Since Date
 - Column with Filter Values *Denotes the column in the input file that contains the values you want to filter for*
 - Field to filter on *Denotes the field in the API to filter on*
+- How many days back you want to go? *Alternative to Since Date. The Until Date is automatically set to current date if this field is used.
 
 ## Endpoints
 - extract_leads_by_ids
@@ -41,21 +42,21 @@ There are 10 options in the UI:
     * The _Desired Fields_ parameter denotes which fields should be retrieved
     * Current functionality allows only filtering on e-mail
 - get_lead_activities
-    * Takes in _Since Date_ and _until_date_ parameter
+    * Takes in _Since Date_ and _Until_date_ parameter. These denote the date when the activity occured.
     * The output is mapped to `lead_activites`
     * The input needs to contain columns 'activity_type_ids' and 'lead_ids'
     * output file will contain columns based on the fields in extracted responses 
     * it can definitely happen that different runs will produce different number of columns!!
     * _Since Date_ and _until_date_ parameters are self-explanatory
 - get_lead_changes
-    * Takes in _Since Date, Until Date_ and _Desired Fields_ parameter
+    * Takes in _Since Date, Until Date_ and _Desired Fields_ parameter. These denote the date of the change in a lead.
     * The output is mapped to `lead_changes`
     * Output file will contain columns based on the fields in extracted responses 
     * It can definitely happen that different runs will produce different number of columns!!
     * _Since Date_  and _Until Date_ parameters are self-explanatory
     * _Desired Fields_ parameter denotes the list of field names to return changes for, field names can be retrieved with the Describe Lead API
 - get_deleted_leads
-    * Takes in the _Since Date_ parameter
+    * Takes in the _Since Date_ parameter. This denotes the date when a lead was deleted.
     * The output is mapped to `deleted_leads`
 - get_campaigns
     * Takes in the _Field to filter on_ and _Column with Filter Values_
