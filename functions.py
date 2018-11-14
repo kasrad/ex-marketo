@@ -374,8 +374,8 @@ def get_opportunities(output_file,
 
 def get_campaigns(output_file,
                  mc_object,
-                 source_file = 'blankblank.csv',
-                 filter_values_column):
+                 filter_values_column,
+                  source_file='blankblank.csv'):
 
     '''
     extract all the campaigns, if id argument is left blank, all campaigns are
