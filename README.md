@@ -13,6 +13,7 @@ As of now, the component can be used for extracting data from 5 endpoints, but i
 - get_lead_activities
 - get_lead_changes
 - get_deleted_leads
+- get_campaigns
 
 ## Parameters
 There are 10 options in the UI:
