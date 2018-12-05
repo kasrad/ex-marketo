@@ -1,18 +1,17 @@
+import functions as fces
+from datetime import datetime, timedelta
+from marketorestpython.client import MarketoClient
+from keboola import docker
+import logging
+import os
+import sys
 "__author__ = 'Radim Kasparek kasrad'"
 "__credits__ = 'Keboola Drak"
 "__component__ = 'Marketo Extractor'"
 
 """
-Python 3 environment 
+Python 3 environment
 """
-
-import sys
-import os
-import logging
-from keboola import docker
-from marketorestpython.client import MarketoClient
-from datetime import datetime, timedelta
-import functions as fces
 
 
 # Environment setup
@@ -37,7 +36,7 @@ logging.info("params read")
 # fill in Munchkin ID, typical format 000-AAA-000
 # enter Client ID and Secret from Admin > LaunchPoint > View Details
 
-client_id = cfg.get_parameters()["#client_id"] 
+client_id = cfg.get_parameters()["#client_id"]
 munchkin_id = cfg.get_parameters()["#munchkin_id"]
 client_secret = cfg.get_parameters()["#client_secret"]
 method = cfg.get_parameters()["method"]
@@ -77,12 +76,18 @@ elif since_date == '' and dayspan != '':
 else:
     pass
 
+if len(in_tables) == 0:
+    in_tables[0]['destination'] = 'placeholder'
+else:
+    pass
+
 # Destination to fetch and output files and tables
 DEFAULT_TABLE_INPUT = "/data/in/tables/"
 DEFAULT_FILE_INPUT = "/data/in/files/"
 
 DEFAULT_FILE_DESTINATION = "/data/out/files/"
 DEFAULT_TABLE_DESTINATION = "/data/out/tables/"
+
 
 # main
 
@@ -95,62 +100,63 @@ def main():
     mc = MarketoClient(munchkin_id, client_id, client_secret)
     logging.info('mc read')
     if method == 'extract_leads_by_ids':
-        fces.extract_leads_by_ids(output_file = DEFAULT_TABLE_DESTINATION + 'leads_by_ids.csv',
-                                  source_file = DEFAULT_TABLE_INPUT + in_tables[0]['destination'],
-                                  fields = desired_fields,
-                                  mc_object = mc)
+        fces.extract_leads_by_ids(output_file=DEFAULT_TABLE_DESTINATION + 'leads_by_ids.csv',
+                                  source_file=DEFAULT_TABLE_INPUT +
+                                  in_tables[0]['destination'],
+                                  fields=desired_fields,
+                                  mc_object=mc)
 
     elif method == 'extract_leads_by_filter':
-        fces.extract_leads_by_filter(output_file = DEFAULT_TABLE_DESTINATION + 'leads_by_filter.csv',
+        fces.extract_leads_by_filter(output_file=DEFAULT_TABLE_DESTINATION + 'leads_by_filter.csv',
                                      source_file=DEFAULT_TABLE_INPUT +
                                      in_tables[0]['destination'],
-                                     filter_on = filter_field,
-                                     filter_values_column = filter_column,
-                                     fields = desired_fields,
-                                     mc_object = mc)
+                                     filter_on=filter_field,
+                                     filter_values_column=filter_column,
+                                     fields=desired_fields,
+                                     mc_object=mc)
 
     elif method == 'get_deleted_leads':
-        fces.get_deleted_leads(output_file = DEFAULT_TABLE_DESTINATION + 'deleted_leads.csv',
-                               since_date = since_date,
-                               mc_object = mc)
+        fces.get_deleted_leads(output_file=DEFAULT_TABLE_DESTINATION + 'deleted_leads.csv',
+                               since_date=since_date,
+                               mc_object=mc)
 
     elif method == 'get_lead_changes':
-        fces.get_lead_changes(output_file = DEFAULT_TABLE_DESTINATION + 'lead_changes.csv',
-                              fields = desired_fields,
-                              since_date = since_date,
-                              until_date = until_date,
-                              mc_object = mc)
+        fces.get_lead_changes(output_file=DEFAULT_TABLE_DESTINATION + 'lead_changes.csv',
+                              fields=desired_fields,
+                              since_date=since_date,
+                              until_date=until_date,
+                              mc_object=mc)
 
     elif method == 'get_lead_activities':
-        fces.get_lead_activities(output_file = DEFAULT_TABLE_DESTINATION + 'lead_activites.csv',
+        fces.get_lead_activities(output_file=DEFAULT_TABLE_DESTINATION + 'lead_activites.csv',
                                  source_file=DEFAULT_TABLE_INPUT +
                                  in_tables[0]['destination'],
-                                 since_date = since_date,
-                                 until_date = until_date,
-                                 mc_object = mc)
+                                 since_date=since_date,
+                                 until_date=until_date,
+                                 mc_object=mc)
 
     elif method == 'get_companies' and len(in_tables):
-        fces.get_companies(output_file = DEFAULT_TABLE_DESTINATION + 'companies.csv',
+        fces.get_companies(output_file=DEFAULT_TABLE_DESTINATION + 'companies.csv',
                            source_file=DEFAULT_TABLE_INPUT +
                            in_tables[0]['destination'],
-                           filter_on = filter_field,
-                           filter_values_column = filter_column,
-                           fields = desired_fields,
-                           mc_object = mc)
+                           filter_on=filter_field,
+                           filter_values_column=filter_column,
+                           fields=desired_fields,
+                           mc_object=mc)
 
     elif method == 'get_campaigns' and len(in_tables) != 0:
         fces.get_campaigns(
             output_file=DEFAULT_TABLE_DESTINATION + 'campaigns.csv',
             source_file=DEFAULT_TABLE_INPUT +
             in_tables[0]['destination'],
-            mc_object = mc,
-            filter_values_column = filter_column)
-    
+            mc_object=mc,
+            filter_values_column=filter_column)
+
     elif method == 'get_campaigns' and len(in_tables) == 0:
-       fces.get_campaigns(
+        fces.get_campaigns(
             output_file=DEFAULT_TABLE_DESTINATION + 'campaigns.csv',
-            mc_object = mc,
-            filter_values_column = filter_column)
+            mc_object=mc,
+            filter_values_column=filter_column)
 
 
 if __name__ == "__main__":
