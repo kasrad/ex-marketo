@@ -77,7 +77,7 @@ else:
     pass
 
 if len(in_tables) == 0:
-    in_tables[0]['destination'] = 'placeholder'
+    in_tables = [{'destination': 'placeholder'}]
 else:
     pass
 
