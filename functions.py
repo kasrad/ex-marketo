@@ -294,8 +294,10 @@ def get_lead_changes(output_file,
 
             keys = (unique_keys)
             fieldnames = ['leadId', 'activityDate', 'activityTypeId']
-            results_trimmed = {
-                your_key: results[your_key] for your_key in fieldnames}
+            results_trimmed = [0] * len(results)
+            for i in range(len(results)):
+                results_trimmed[i] = {
+                    your_key: results[i][your_key] for your_key in fieldnames}
 
             dict_writer = csv.DictWriter(out_file, fieldnames)
             dict_writer.writeheader()
