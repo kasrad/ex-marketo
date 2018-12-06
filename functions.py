@@ -293,7 +293,11 @@ def get_lead_changes(output_file,
     with open(output_file, mode='w', encoding='utf-8') as out_file:
 
             keys = (unique_keys)
-            dict_writer = csv.DictWriter(out_file, keys)
+            fieldnames = ['leadId', 'activityDate', 'activityTypeId']
+            keys_trimmed = {
+                your_key: keys[your_key] for your_key in fieldnames}
+
+            dict_writer = csv.DictWriter(out_file, keys_trimmed)
             dict_writer.writeheader()
             dict_writer.writerows(results)
         
