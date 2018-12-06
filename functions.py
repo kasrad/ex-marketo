@@ -294,12 +294,12 @@ def get_lead_changes(output_file,
 
             keys = (unique_keys)
             fieldnames = ['leadId', 'activityDate', 'activityTypeId']
-            keys_trimmed = {
-                your_key: keys[your_key] for your_key in fieldnames}
+            results_trimmed = {
+                your_key: results[your_key] for your_key in fieldnames}
 
-            dict_writer = csv.DictWriter(out_file, keys_trimmed)
+            dict_writer = csv.DictWriter(out_file, fieldnames)
             dict_writer.writeheader()
-            dict_writer.writerows(results)
+            dict_writer.writerows(results_trimmed)
         
 
 def get_deleted_leads(output_file,
