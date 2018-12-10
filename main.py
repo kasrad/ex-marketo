@@ -70,9 +70,9 @@ if since_date != '' and dayspan != '':
     logging.error("Please add either since_date or dayspan, not both.")
     sys.exit(1)
 elif since_date == '' and dayspan != '':
-    since_date = (datetime.utcnow() - timedelta(days=int(dayspan)))\
-        .date()
-    until_date = datetime.utcnow().date()
+    since_date = str((datetime.utcnow() - timedelta(days=int(dayspan)))
+                     .date())
+    until_date = str(datetime.utcnow().date())
 else:
     pass
 
