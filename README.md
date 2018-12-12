@@ -63,7 +63,7 @@ There are 10 options in the UI:
     * Takes in the _Field to filter on_ and _Column with Filter Values_
     * If the above parameters are left blank, all campaigns are retrieved.
     * The output is mapped to `campaigns`
-- get_campaigns
+- get_activity_types
     * Doesn't require any parameters.
     * The output is mapped to `activity_types`.
     
