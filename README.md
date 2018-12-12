@@ -52,8 +52,7 @@ There are 10 options in the UI:
 - get_lead_changes
     * Takes in _Since Date, Until Date_ and _Desired Fields_ parameter. These denote the date of the change in a lead.
     * The output is mapped to `lead_changes`
-    * Output file will contain columns based on the fields in extracted responses 
-    * It can definitely happen that different runs will produce different number of columns!!
+    * Output file will contain columns `leadId`, `activityDate` and `activityTypeId`
     * _Since Date_  and _Until Date_ parameters are self-explanatory
     * _Desired Fields_ parameter denotes the list of field names to return changes for, field names can be retrieved with the Describe Lead API
 - get_deleted_leads
