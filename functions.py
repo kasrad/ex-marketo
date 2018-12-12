@@ -58,8 +58,8 @@ def extract_leads_by_ids(output_file, source_file, mc_object,
                          fields=['id', 'firstName', 'lastName', 'email',
                                  'updatedAt', 'createdAt', 'Do Not Call Reason']):
     """
-    Extracts leads by lead_id. 
-    The input file needs to contain a column with 
+    Extracts leads by lead_id.
+    The input file needs to contain a column with
     """
 
     with open(source_file, mode='rt', encoding='utf-8') as in_file,\
@@ -134,9 +134,9 @@ def get_companies(output_file,
                   fields=['id', 'firstName', 'lastName', 'email', 'updatedAt',
                           'createdAt', 'Do Not Call Reason']):
     """
-    filterType can be: externalCompanyId, id, externalSalesPersonId, company 
+    filterType can be: externalCompanyId, id, externalSalesPersonId, company
 
-    Extracts companies based on filters 
+    Extracts companies based on filters
     source_file -  needs to contain a column with the values to input
     to the filter
     filter_values_column - the column in the source file that contains
@@ -181,8 +181,8 @@ def get_lead_activities(output_file,
     """
     source file: has to contain columns 'activity_type_ids' and 'lead_ids'. These
     must contain the values corresponding for the query.
-    output file: will contain columns based on the fields in extracted responses 
-    - it can definitely happen that different runs will produce different number of columns!!    
+    output file: will contain columns based on the fields in extracted responses
+    - it can definitely happen that different runs will produce different number of columns!!
     since_date
     until_date
     """
@@ -241,7 +241,7 @@ def get_lead_changes(output_file,
     """
     this function takes very long to run
     output file: will contain columns based on the fields in extracted responses
-     - it can definitely happen that different runs will produce different number of columns!!    
+     - it can definitely happen that different runs will produce different number of columns!!
     since_date
     until_date
     fields: list of field names to return changes for, field names can be
@@ -292,17 +292,16 @@ def get_lead_changes(output_file,
 
     with open(output_file, mode='w', encoding='utf-8') as out_file:
 
-            keys = (unique_keys)
-            fieldnames = ['leadId', 'activityDate', 'activityTypeId']
-            results_trimmed = [0] * len(results)
-            for i in range(len(results)):
-                results_trimmed[i] = {
-                    your_key: results[i][your_key] for your_key in fieldnames}
+        keys = (unique_keys)
+        fieldnames = ['leadId', 'activityDate', 'activityTypeId']
+        results_trimmed = [0] * len(results)
+        for i in range(len(results)):
+            results_trimmed[i] = {
+                your_key: results[i][your_key] for your_key in fieldnames}
 
-            dict_writer = csv.DictWriter(out_file, fieldnames)
-            dict_writer.writeheader()
-            dict_writer.writerows(results_trimmed)
-        
+        dict_writer = csv.DictWriter(out_file, fieldnames)
+        dict_writer.writeheader()
+        dict_writer.writerows(results_trimmed)
 
 
 def get_deleted_leads(output_file,
@@ -310,7 +309,7 @@ def get_deleted_leads(output_file,
                       mc_object):
     """
     output file: will contain first and last name, Marketo ID and time of deletion,
-    but no additional Lead attributes    
+    but no additional Lead attributes
     since_date
     """
 
@@ -342,7 +341,7 @@ def get_opportunities(output_file,
     Returns opportunities based on a filter and set of values.
     source_file -  needs to contain a column with the values to input
     to the filter
-    output_file - 
+    output_file -
     filter_values_column - the column in the source file that contains
     the values to input to the filter
     filter_on- specifies the field in API (e.g. "email")
@@ -430,3 +429,23 @@ def get_campaigns(output_file,
             dict_writer = csv.DictWriter(out_file, keys)
             dict_writer.writeheader()
             dict_writer.writerows(results)
+
+
+def get_activity_types(output_file,
+                       mc_object):
+    """
+    Returns a list of available activity types in the target instance,
+    along with associated metadata of each type
+    """
+    activity_types = mc_object.execute(method='get_activity_types')
+
+    if len(activity_types) > 0:
+        print('%i activities found', len(activity_types))
+    else:
+        print('No activities found!')
+
+    with open(output_file, mode='w', encoding='utf-8') as out_file:
+        keys = ['attributes', 'description', 'id', 'name', 'primaryAttribute']
+        dict_writer = csv.DictWriter(out_file, keys)
+        dict_writer.writeheader()
+        dict_writer.writerows(activity_types)

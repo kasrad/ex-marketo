@@ -158,6 +158,10 @@ def main():
             mc_object=mc,
             filter_values_column=filter_column)
 
+    elif method == 'get_activity_types':
+        fces.get_activity_types(output_file=DEFAULT_TABLE_DESTINATION + 'activity_types.csv',
+                                mc_object=mc)
+
 
 if __name__ == "__main__":
 
