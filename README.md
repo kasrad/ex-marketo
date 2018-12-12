@@ -14,6 +14,7 @@ As of now, the component can be used for extracting data from 5 endpoints, but i
 - get_lead_changes
 - get_deleted_leads
 - get_campaigns
+- get_activity_types
 
 ## Parameters
 There are 10 options in the UI:
@@ -62,6 +63,9 @@ There are 10 options in the UI:
     * Takes in the _Field to filter on_ and _Column with Filter Values_
     * If the above parameters are left blank, all campaigns are retrieved.
     * The output is mapped to `campaigns`
+- get_campaigns
+    * Doesn't require any parameters.
+    * The output is mapped to `activity_types`.
     
 
 
