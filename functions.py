@@ -324,7 +324,15 @@ def get_deleted_leads(output_file,
 
     with open(output_file, mode='w', encoding='utf-8') as out_file:
 
-        keys = results[0].keys()
+        keys = ['id',
+                'marketoGUID',
+                'leadId',
+                'activityDate',
+                'activityTypeId',
+                'campaignId',
+                'primaryAttributeValueId',
+                'primaryAttributeValue',
+                'attributes']
         dict_writer = csv.DictWriter(out_file, keys)
         dict_writer.writeheader()
         dict_writer.writerows(results)
